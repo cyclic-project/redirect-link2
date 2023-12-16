@@ -1,0 +1,219 @@
+<!-- admin.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Admin Panel</title>
+ <style>
+  body {
+   font-family: Arial, sans-serif;
+   text-align: center;
+   margin: 50px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-height: 88vh;
+  }
+
+  main {
+   flex: 1;
+  }
+
+  h1 {
+   color: #333;
+  }
+
+  form {
+   display: inline-block;
+   text-align: left;
+   width: 100%;
+   max-width: 400px;
+   margin-bottom: 20px;
+  }
+
+  label {
+   margin-right: 8px;
+  }
+
+  input {
+   padding: 6px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   width: calc(100% - 20px);
+  }
+
+  button {
+   padding: 8px 12px;
+   border: none;
+   cursor: pointer;
+   width: 100%;
+   background-color: green;
+   border-radius: 5px;
+  }
+
+  ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+  }
+
+  li {
+   margin: 10px 0;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+
+  .redirect-entry {
+   display: flex;
+   flex-direction: row;
+   /* Mengatur tata letak ke samping */
+   align-items: center;
+   justify-content: space-between;
+   /* Membuat tombol Edit dan Delete bersebelahan */
+   width: 100%;
+   /* Membuat redirect entry mengisi lebar parent (ul) */
+   padding: 10px;
+   /* Menambahkan padding untuk memberikan ruang di sekitar setiap redirect entry */
+   border: 1px solid #ccc;
+   /* Menambahkan border untuk memisahkan setiap redirect entry */
+   margin-bottom: 10px;
+   /* Memberikan jarak antara setiap redirect entry */
+  }
+
+  .button-container {
+   display: flex;
+   gap: 7px;
+   /* Jarak antara tombol Edit dan Delete */
+   padding-top: 20px;
+  }
+
+  .edit-button,
+  form button {
+   flex-grow: 1;
+   height: 40px;
+   /* Membuat tombol Edit dan Delete mengisi lebar yang tersedia */
+   color: white;
+   padding: 10px;
+  }
+
+  .path-url-container {
+   flex-grow: 3;
+   /* Membuat bagian path dan URL mengisi sebagian besar lebar */
+   text-align: left;
+   /* Mencegah path dan URL menumpuk ke kanan */
+  }
+
+  footer {
+   margin-top: auto;
+   color: #777;
+   text-align: center;
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+  }
+
+  a {
+   text-decoration: none;
+  }
+
+  .header-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   max-width: 1200px;
+   /* Sesuaikan dengan kebutuhan Anda */
+   margin: 0 auto;
+   /* Untuk membuat header berada di tengah */
+   padding: 10px;
+   background-color: #f8f9fa;
+  }
+
+  .logout-container {
+   /* Menempatkan tombol logout di paling kanan */
+   margin-left: auto;
+  }
+
+  .logout-button {
+   background-color: #dc3545;
+   color: #fff;
+   padding: 8px 12px;
+   border: none;
+   cursor: pointer;
+   border-radius: 5px;
+  }
+
+  @media only screen and (max-width: 600px) {
+   input {
+    width: calc(100% - 20px);
+   }
+  }
+ </style>
+</head>
+
+<body>
+
+ <header class="header-container">
+  <h2>Redirect link Panel</h2>
+  <div class="logout-container">
+   <button class="logout-button" onclick="location.href='/logout'">Logout</button>
+  </div>
+ </header>
+
+ <form action="/admin/add" method="POST">
+  <label for="path">Path:</label>
+  <input type="text" id="path" name="path" required>
+  <br>
+  <label for="url">URL:</label>
+  <input type="url" id="url" name="url" required>
+  <br>
+  <button type="submit">Add Redirect</button>
+ </form>
+
+ <h2>Links:</h2>
+ <ul>
+  <% redirects.forEach(redirect=> { %>
+   <li class="redirect-entry">
+    <div class="path-url-container">
+     <strong>Path:</strong>
+     <a id="urlBase">https://redirects.marsell.tech</a><%= redirect.path %>
+     <br>
+     <strong>URL:</strong>
+     <%= redirect.url %>
+    </div>
+    <div class="button-container">
+     <button class="edit-button"><a href="/admin/edit<%= redirect.path %>" style="color: white;">Edit</a></button>
+     <form action="/admin/delete<%= redirect.path %>" method="post">
+      <button type="submit" style="background-color: red;">Delete</button>
+     </form>
+    </div>
+   </li>
+   <% }); %>
+ </ul>
+
+ <footer>
+  <a href="#"></a>Creator: Marchello. Copyright licensed &copy; 2023
+ </footer></a>
+
+ <script>
+  window.onload = function () {
+   window.scrollTo(0, 0);
+  };
+
+  var currentURL = window.location.href;
+  var urlBase = document.querySelectorAll('#urlBase')
+  var pathAfterHTTPS = currentURL.split('https://')[1] || currentURL.split('http://')[1]
+  var targetPath = pathAfterHTTPS.split('/')[0];
+
+  var linkUrl = `${currentURL.split(targetPath)[0]}${targetPath}`
+  urlBase.forEach(function (element) {
+   element.textContent = `${linkUrl}`;
+  });
+ </script>
+</body>
+
+</html>

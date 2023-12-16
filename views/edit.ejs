@@ -1,0 +1,94 @@
+<!-- views/edit.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Edit Redirect</title>
+ <style>
+  body {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: Arial, sans-serif;
+  }
+
+  .container {
+   max-width: 600px;
+   margin: 0 auto;
+   padding: 20px;
+  }
+
+  form {
+   display: flex;
+   flex-direction: column;
+  }
+
+  label {
+   margin-bottom: 5px;
+  }
+
+  input {
+   margin-bottom: 15px;
+   padding: 8px;
+  }
+
+  button {
+   padding: 10px;
+   background-color: #4caf50;
+   color: white;
+   border: none;
+   cursor: pointer;
+   border-radius: 5px;
+   margin-bottom: 10px;
+  }
+
+  .cancel-button {
+   border-radius: 5px;
+   text-decoration: none;
+   padding: 10px;
+   background-color: #f44336;
+   color: white;
+   border: none;
+   cursor: pointer;
+   /* margin-right: 10px; */
+   text-align: center;
+  }
+
+  footer {
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+   background-color: #f1f1f1;
+   padding: 10px;
+   text-align: center;
+  }
+ </style>
+</head>
+
+<body>
+ <div class="container">
+  <h1>Edit Redirect</h1>
+
+  <form method="post" action="/admin/edit<%= redirect.path %>">
+   <label for="path">New Path:</label>
+   <input type="text" id="path" name="path" value="<%= redirect.path.substring(1) %>" required>
+
+   <label for="url">New URL:</label>
+   <input type="text" id="url" name="url" value="<%= redirect.url %>" required>
+
+   <button type="submit">Save</button>
+   <a href="/admin" class="cancel-button">Cancel</a>
+  </form>
+
+  <p style="text-align: center;">When you save, you will logged out</p>
+ </div>
+
+ <footer>
+  Creator: Marchello. Copyright licensed &copy; 2023
+ </footer>
+</body>
+
+</html>

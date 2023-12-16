@@ -1,0 +1,108 @@
+<!-- login.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Login</title>
+ <style>
+  body {
+   font-family: Arial, sans-serif;
+   text-align: center;
+   margin: 50px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+  }
+
+  h1 {
+   color: #333;
+  }
+
+  form {
+   display: inline-block;
+   text-align: left;
+   width: 100%;
+   max-width: 400px;
+  }
+
+  label {
+   margin-right: 8px;
+  }
+
+  input {
+   padding: 6px;
+   margin-right: 10px;
+   width: calc(100% - 20px);
+  }
+
+  button {
+   margin-top: 10px;
+   padding: 8px 12px;
+   background-color: #007BFF;
+   color: #fff;
+   border: none;
+   cursor: pointer;
+   width: 100%;
+   transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+   background-color: #218838;
+  }
+
+  footer {
+   margin-top: auto;
+   color: #777;
+   text-align: center;
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+  }
+
+  @media only screen and (max-width: 600px) {
+   input {
+    width: calc(100% - 20px);
+   }
+  }
+ </style>
+</head>
+
+<body>
+
+ <h1>Login</h1>
+
+ <form action="/login" method="POST">
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Login</button>
+ </form>
+
+ <footer>
+  Minimalist Login &copy; 2023
+ </footer>
+
+ <script>
+  window.onload = function () {
+   // Mendapatkan parameter 'redirectPath' dari URL
+   const urlParams = new URLSearchParams(window.location.search);
+   const redirectPath = urlParams.get('wrong');
+
+   // Menggunakan nilai parameter jika ada
+   if (redirectPath == "") {
+    document.querySelector('button').style = "background-color: red;"
+    window.history.pushState({}, '', '/login')
+    setTimeout(() => {
+     document.querySelector('button').style = "background-color: #007BFF;"
+     setTimeout(() => {
+      location.reload()
+     }, 100);
+    }, 900);
+   }
+  };
+ </script>
+</body>
+
+</html>
